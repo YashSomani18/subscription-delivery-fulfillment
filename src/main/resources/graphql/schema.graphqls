@@ -1,0 +1,117 @@
+type Query {
+    # Order queries
+    orders: [Order]
+    order(id: ID!): Order
+    ordersBySubscriptionId(subscriptionId: ID!): [Order]
+    
+    # Fulfillment queries
+    fulfillments: [Fulfillment]
+    fulfillment(id: ID!): Fulfillment
+    fulfillmentsByOrderId(orderId: ID!): [Fulfillment]
+}
+
+type Mutation {
+    # Order mutations
+    createOrder(input: CreateOrderInput!): Order
+    updateOrder(id: ID!, input: UpdateOrderInput!): Order
+    cancelOrder(id: ID!): Boolean
+    
+    # Fulfillment mutations
+    createFulfillment(input: CreateFulfillmentInput!): Fulfillment
+    updateFulfillment(id: ID!, input: UpdateFulfillmentInput!): Fulfillment
+    markFulfilled(id: ID!): Fulfillment
+}
+
+type Order {
+    id: ID!
+    subscriptionId: ID!
+    orderNumber: String!
+    status: OrderStatus!
+    items: [OrderItem]
+    totalAmount: Float!
+    createdAt: String!
+    updatedAt: String!
+    fulfillments: [Fulfillment]
+}
+
+type OrderItem {
+    id: ID!
+    productId: ID!
+    productName: String!
+    quantity: Int!
+    unitPrice: Float!
+    totalPrice: Float!
+}
+
+type Fulfillment {
+    id: ID!
+    orderId: ID!
+    fulfillmentType: FulfillmentType!
+    status: FulfillmentStatus!
+    trackingNumber: String
+    shippedAt: String
+    deliveredAt: String
+    createdAt: String!
+    updatedAt: String!
+    order: Order
+}
+
+enum OrderStatus {
+    PENDING
+    CONFIRMED
+    PROCESSING
+    SHIPPED
+    DELIVERED
+    CANCELLED
+}
+
+enum FulfillmentType {
+    DIGITAL
+    PHYSICAL
+    SERVICE
+}
+
+enum FulfillmentStatus {
+    PENDING
+    PROCESSING
+    SHIPPED
+    DELIVERED
+    FAILED
+}
+
+input CreateOrderInput {
+    subscriptionId: ID!
+    items: [CreateOrderItemInput!]!
+}
+
+input CreateOrderItemInput {
+    productId: ID!
+    productName: String!
+    quantity: Int!
+    unitPrice: Float!
+}
+
+input UpdateOrderInput {
+    status: OrderStatus
+    items: [UpdateOrderItemInput!]
+}
+
+input UpdateOrderItemInput {
+    id: ID
+    productId: ID
+    productName: String
+    quantity: Int
+    unitPrice: Float
+}
+
+input CreateFulfillmentInput {
+    orderId: ID!
+    fulfillmentType: FulfillmentType!
+}
+
+input UpdateFulfillmentInput {
+    status: FulfillmentStatus
+    trackingNumber: String
+    shippedAt: String
+    deliveredAt: String
+}

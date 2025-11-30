@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: fulfillment-service
+  profiles:
+    active: dev
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/subscription_fulfillment
+      database: subscription_fulfillment
+  graphql:
+    graphiql:
+      enabled: true
+    path: /graphql
+
+server:
+  port: 8081
+
+logging:
+  level:
+    com.subscription.fulfillment: DEBUG
+    org.springframework.web: DEBUG
