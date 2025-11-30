@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: fulfillment-service
+  profiles:
+    active: prod
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/${MONGO_DATABASE:subscription_fulfillment}
+      database: ${MONGO_DATABASE:subscription_fulfillment}
+  graphql:
+    graphiql:
+      enabled: false
+    path: /graphql
+
+server:
+  port: ${PORT:8081}
+
+logging:
+  level:
+    com.subscription.fulfillment: INFO
+    org.springframework.web: WARN

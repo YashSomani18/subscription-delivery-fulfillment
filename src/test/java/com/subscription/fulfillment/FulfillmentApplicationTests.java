@@ -1,9 +1,9 @@
-package subscription_delivery_project.com.example.fulfillment;
+package com.subscription.fulfillment;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(classes = FulfillmentServiceApplication.class)
 class FulfillmentApplicationTests {
 
 	@Test

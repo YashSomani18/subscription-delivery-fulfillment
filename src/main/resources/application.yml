@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: fulfillment-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/fulfillment_service_db
+  redis:
+    host: localhost
+    port: 6379
+    database: 1
+  kafka:
+    bootstrap-servers: localhost:9093
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: fulfillment-service-group
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  graphql:
+    graphiql:
+      enabled: true
+    path: /api/graphql
+
+server:
+  port: 8002
+  servlet:
+    context-path: /api
+
+logging:
+  level:
+    root: INFO
+    com.subscription: DEBUG
